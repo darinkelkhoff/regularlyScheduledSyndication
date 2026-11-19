@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<channel><title>Signal Paths</title><description>A podcast about how things connect.</description><link>https://podcast.example/show</link><itunes:author>Signal Studio</itunes:author><itunes:explicit>false</itunes:explicit>
+<item><guid isPermaLink="false">episode-two</guid><title>The second connection</title><pubDate>Tue, 09 Jan 2024 12:00:00 GMT</pubDate><description><![CDATA[<p>A <strong>good</strong> conversation.<script>alert(1)</script><img src=x onerror=alert(2)></p>]]></description><enclosure url="https://audio.example/two.mp3?token=private" length="12345" type="audio/mpeg"/><itunes:episode>42</itunes:episode><itunes:season>2</itunes:season><itunes:duration>01:02:03</itunes:duration><itunes:explicit>true</itunes:explicit></item>
+<item><guid>episode-one</guid><title>The first connection</title><pubDate>Tue, 02 Jan 2024 12:00:00 GMT</pubDate><content:encoded><![CDATA[<p>Hello <a href="javascript:alert(1)">there</a>.</p>]]></content:encoded><enclosure url="https://audio.example/one.mp3" length="7890" type="audio/mpeg"/><itunes:episode>41</itunes:episode></item>
+</channel></rss>

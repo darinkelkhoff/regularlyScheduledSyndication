@@ -1,0 +1,16 @@
+ALTER TABLE sources ADD COLUMN metadata_ciphertext TEXT;
+ALTER TABLE sources ADD COLUMN metadata_hash TEXT;
+ALTER TABLE sources ADD COLUMN validators_ciphertext TEXT;
+ALTER TABLE sources ADD COLUMN last_checked_at TEXT;
+ALTER TABLE sources ADD COLUMN last_success_at TEXT;
+ALTER TABLE sources ADD COLUMN last_error_code TEXT;
+ALTER TABLE sources ADD COLUMN poll_claim TEXT;
+ALTER TABLE sources ADD COLUMN poll_lease_until INTEGER;
+ALTER TABLE sources ADD COLUMN poll_failures INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE sources ADD COLUMN next_check_at INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE episodes ADD COLUMN metadata_ciphertext TEXT;
+ALTER TABLE episodes ADD COLUMN metadata_hash TEXT;
+ALTER TABLE episodes ADD COLUMN episode_number TEXT;
+DROP TRIGGER delivered_metadata_dirty;
+CREATE TRIGGER delivered_metadata_dirty AFTER UPDATE ON episodes WHEN OLD.title IS NOT NEW.title OR OLD.published_at IS NOT NEW.published_at OR OLD.metadata_hash IS NOT NEW.metadata_hash BEGIN UPDATE subscriptions SET publication_version = publication_version + 1, revision = revision + 1 WHERE id IN (SELECT subscription_id FROM releases WHERE source_id = NEW.source_id AND episode_identity = NEW.identity); UPDATE publication_outbox SET desired_version = (SELECT publication_version FROM subscriptions WHERE id = subscription_id) WHERE subscription_id IN (SELECT subscription_id FROM releases WHERE source_id = NEW.source_id AND episode_identity = NEW.identity); END;
+CREATE TRIGGER show_metadata_dirty AFTER UPDATE OF title, metadata_hash ON sources WHEN OLD.title IS NOT NEW.title OR OLD.metadata_hash IS NOT NEW.metadata_hash BEGIN UPDATE subscriptions SET publication_version = publication_version + 1, revision = revision + 1 WHERE source_id = NEW.id; UPDATE publication_outbox SET desired_version = (SELECT publication_version FROM subscriptions WHERE id = subscription_id) WHERE subscription_id IN (SELECT id FROM subscriptions WHERE source_id = NEW.id); END;

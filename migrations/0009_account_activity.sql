@@ -1,0 +1,2 @@
+ALTER TABLE users ADD COLUMN created_at INTEGER;
+ALTER TABLE users ADD COLUMN last_login_at INTEGER;
