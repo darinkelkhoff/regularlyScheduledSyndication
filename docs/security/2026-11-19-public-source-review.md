@@ -22,7 +22,8 @@ penetration test or a guarantee that no vulnerabilities remain.
    parser now removes source URL userinfo before resolving relative artwork,
    links, and enclosures, and rejects explicit credentials in media URLs.
    Regression tests cover these fields. Counts-only inspection found no affected
-   media URLs in current staging or production stored metadata.
+   media URLs in current staging or production stored metadata or in any of
+   the six hosted feed snapshots checked.
 3. **Concurrent publication storage growth — moderate severity.** Publishing an
    unchanged version now skips rendering/upload. A strictly newer-version and
    observed-object compare-and-swap prevents competing writers from replacing
